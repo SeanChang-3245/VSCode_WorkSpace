@@ -57,7 +57,7 @@ int dp_min(vector<int>& vec, int l, int r)
 void table(vector<int>& data);
 vector<vector<int>> sparse;
 bool built = false;
-int sparsetalbe(vector<int>& data, int l, int r)
+int sparsetable(vector<int>& data, int l, int r)
 {
     if (!built)
     {
@@ -90,6 +90,8 @@ void table(vector<int>& data)
         {
             if(i == 0)
             {
+                if(j >= len)
+                    continue;
                 sparse[j][i] = data[j];
                 continue;
             }
