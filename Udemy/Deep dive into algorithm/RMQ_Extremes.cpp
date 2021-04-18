@@ -25,6 +25,8 @@ int main()
         cout << endl;
     }
 
+    cout << endl;
+
     //seg.lvltravel();
 
 
