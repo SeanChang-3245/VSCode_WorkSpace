@@ -1,8 +1,8 @@
 #pragma once
 
 
-#include "segment.h"
-
+#include "minSegment.h"
+#include "sumSegment.h"
 
 
 
@@ -53,3 +53,48 @@ int dp_min(vector<int>& vec, int l, int r)
     return dp[l][r];
 }
 
+
+void table(vector<int>& data);
+vector<vector<int>> sparse;
+bool built = false;
+int sparsetalbe(vector<int>& data, int l, int r)
+{
+    if (!built)
+    {
+        table(data);
+        built = true;
+    }
+
+    int len = r - l + 1;
+    int k = log2(len);
+    int remain = len - pow(2, k);
+    
+    return min(sparse[l][k], sparse[l+remain][k]);
+
+}
+
+void table(vector<int>& data)
+{
+    int len = data.size();
+    int wid = log2(len)+1;
+    sparse.resize(len);
+
+    for(int i = 0; i < len; i++)
+    {
+        sparse[i] = vector<int>(wid);
+    } 
+    
+    for(int i = 0; i < wid; i++)
+    {
+        for(int j = 0; j < len - (pow(2, i-1) - 1); j++)
+        {
+            if(i == 0)
+            {
+                sparse[j][i] = data[j];
+                continue;
+            }
+            sparse[j][i] = min(sparse[j][i-1], sparse[j + pow(2, i-1)][i-1]); 
+        }
+    }
+
+}
