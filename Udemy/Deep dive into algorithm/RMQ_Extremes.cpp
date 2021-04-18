@@ -1,70 +1,35 @@
 #include <bits/stdc++.h>
+#include "header/RMQ.h"
 
 using namespace std;
 
 #define endl '\n'
 
-int bf(vector<int>& vec, int l, int r)
+
+int main()
 {
-    int m = INT_MIN;
-    for(int i = 0; i <= r; i++)
-    {
-        if(vec[i] > m)
-            m = vec[i];
-    }
-    return m;
-}
+    //ios_base::sync_with_stdio(false);
+    //cin.tie(0);
 
+    vector<int> vec{7,4,7,8,6,3,2,1,9,5,7};
 
-int bf_min(vector<int>& vec, int l, int r)
-{
-    int m = INT_MAX;
-    for(int i = 0; i <= r; i++)
-    {
-        if(vec[i] < m)
-            m = vec[i];
-    }
-    return m;
-}
+    minSegment seg(vec);
 
-
-int dp_min(vector<int>& vec, int l, int r)
-{
     int len = vec.size();
-
-    vector<vector<int>> dp(len, vector<int>(len, 0));
-
     for(int i = 0; i < len; i++)
     {
         for(int j = i; j < len; j++)
         {
-            if(i == j)
-            {
-                dp[i][j] = vec[i];
-            }
-            else
-            {
-                dp[i][j] = min(dp[i][j-1], vec[j]);
-            }
+            printf("[%d, %d] = %d\n", i, j, seg.rangequery(i, j));
         }
+        cout << endl;
     }
-    return dp[l][r];
-}
+
+    //seg.lvltravel();
 
 
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(0);
+    return 0;
 
-    int m;
-    cin >> m;
-
-    vector<int> vec(m);
-    for(int i = 0; i < m; i++)
-    {
-        cin >> vec[i];
-    }
 
 
 }
