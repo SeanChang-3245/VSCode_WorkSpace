@@ -54,6 +54,9 @@ int dp_min(vector<int>& vec, int l, int r)
 }
 
 
+
+
+
 void table(vector<int>& data);
 vector<vector<int>> sparse;
 bool built = false;
