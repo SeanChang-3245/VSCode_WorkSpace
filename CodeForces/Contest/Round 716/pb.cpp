@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const long long MOD = 10e9 + 7;
+const long long MOD = 1e9 + 7;
 #define endl '\n'
 
 int main()
