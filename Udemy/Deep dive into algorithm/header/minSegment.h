@@ -41,6 +41,9 @@ public:
     int rangequery(int l, int r);
     void lvltravel();
 
+    void singlechange(int i, int val);
+    void rangechange(int l, int r, int val);
+
 };
 
 void minSegment::build(vector<int> data, int l, int r, int k)
