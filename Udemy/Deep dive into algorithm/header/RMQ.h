@@ -2,7 +2,6 @@
 
 
 #include "minSegment.h"
-#include "sumSegment.h"
 
 
 
