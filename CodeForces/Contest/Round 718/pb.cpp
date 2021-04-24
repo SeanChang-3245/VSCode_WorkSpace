@@ -4,6 +4,8 @@ using namespace std;
 #define endl '\n'
 #define ll long long
 
+int path[105][105];
+
 int main()
 {
     ios_base::sync_with_stdio(false);
@@ -15,62 +17,61 @@ int main()
     {
         int n, m;
         cin >> n >> m;
-        vector<vector<int>> path(n, vector<int>(m));
-        vector<int> xmin(m); //橫
+        
+        memset(path, -1, sizeof(path));
+        
+        vector<int> vec(n*m);
 
-        for(int i = 0; i < n; i++)
+        for(int i = 0; i < n*m; i++)
+            cin >> vec[i];
+
+        sort(vec.begin(), vec.end());
+
+        for(int i = 0; i < min(m, n); i++)
         {
-            for(int j = 0; j < m; j++)
-                path[i][j] = -1;
+            path[i][i] = vec[i];
         }
 
-
-        for(int i = 0; i < n; i++)
+        if(n < m)
         {
-            for(int j = 0; j < m; j++)
+            for(int i = n; i < m; i++)
             {
-                int tmp;
-                cin >> tmp;
-
-                if(i == 0)
-                {
-                    path[0][j] = tmp;
-                    xmin[j] = tmp;
-                    continue;
-                }
-
-                int maxx = INT_MIN, maxidx;
-                for(int k = 0; k < m; k++)
-                {
-                    if(xmin[k] - tmp > maxx && path[i][k] == -1)
-                    {
-                        maxx = xmin[k] - tmp;
-                        maxidx = k;
-                    }
-                }
-
-                path[i][maxidx] = tmp;
-                xmin[maxidx] = min(xmin[maxidx], tmp); 
+                path[i][n-1] = vec[i];
             }
+        }
+        else if(m < n)
+        {
+            for(int i = m; i < n; i++)
+            {
+                path[m-1][i] = vec[i];
+            }
+        }
 
-            
-
-           
-
-
+        int k = max(m, n);
+        for(int i = 0; i < m; i++)
+        {
+            for(int j = 0; j < n; j++)
+            {
+                if(path[i][j] == -1)
+                {
+                    path[i][j] = vec[k];
+                    ++k;
+                }
+            }
         }
 
         for(int i = 0; i < n; i++)
         {
             for(int j = 0; j < m; j++)
-            {
-                cout << path[i][j] << ' ';
+            {   
+                cout << path[j][i] << ' ';
             }
             cout << endl;
         }
+
     }
 
         
-
+    return 0;
 
 }
