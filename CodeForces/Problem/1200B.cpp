@@ -24,11 +24,11 @@ int main()
         {
             if(h[i] + k >= h[i+1])
             {
-                bag += k + h[i] - h[i+1];
+                bag += min(h[i], k + h[i] - h[i+1]);
             }
             else
             {
-                bag -= h[i+1] - k - h[i];
+                bag -= h[i+1] - k - h[i]; 
             }
 
             if(bag < 0)
