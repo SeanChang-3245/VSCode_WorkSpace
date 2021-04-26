@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+/*
 int main()
 {
     ios_base::sync_with_stdio(false);
@@ -66,6 +66,85 @@ int main()
     {
         cout << start[i] << ' ';
     }
+    return 0;
+
+
+}*/
+
+
+
+
+
+
+
+
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    string str;
+    cin >> str;
+    str += '$';
+
+    int len = str.size();
+    vector<int> suf(len);
+    vector<int> ec(len);
+
+    {
+        vector<pair<char, int>> tmp(len); // <char, idx>
+        for(int i = 0; i < len; i++) tmp[i] = {str[i], i};
+        
+        sort(tmp.begin(), tmp.end());
+        for(int i = 0; i < len; i++) suf[i] = tmp[i].second;
+
+        ec[suf[0]] = 0;
+        for(int i = 1; i < len; i++)
+        {
+            if(tmp[i].first == tmp[i-1].first)
+            {
+                ec[suf[i]] = ec[suf[i-1]];
+            }
+            else
+            {
+                ec[suf[i]] = ec[suf[i-1]] + 1;
+            }
+        }
+    }
+
+    int k = 0;
+
+    while((1 << k) < len)
+    {
+        vector<pair<pair<int, int>, int>> tmp(len);
+
+        for(int i = 0; i < len; i++) 
+        {
+            tmp[i] = {{ec[i], ec[(i+(1 << k)) % len]}, i};
+        }
+
+        sort(tmp.begin(), tmp.end());
+
+        for(int i = 0; i < len; i++)  suf[i] = tmp[i].second;
+
+        ec[suf[0]] = 0;
+        for(int i = 1; i < len; i++)
+        {
+            if(tmp[i].first == tmp[i-1].first)
+            {
+                ec[suf[i]] = ec[suf[i-1]];
+            }
+            else
+            {
+                ec[suf[i]] = ec[suf[i-1]] + 1;
+            }
+        }
+        ++k;
+    }
+
+    for(int i : suf)
+        cout << i << ' ';
     return 0;
 
 
