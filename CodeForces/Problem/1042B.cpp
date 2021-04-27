@@ -9,11 +9,11 @@ int main()
     int m;
     cin >> m;
 
-    vector<int> dp(7, INT_MAX);
+    vector<long> dp(7, 3e6);
 
     for(int i = 0; i < m; i++)
     {
-        int tmp;
+        long tmp;
         string str;
         cin >> tmp >> str;
         sort(str.begin(), str.end());
@@ -33,5 +33,21 @@ int main()
         else if(str == "ABC")
             dp[6] = min(dp[6], tmp);
     }
+
+    long ans;
+    ans = min(dp[0]+dp[1]+dp[2], dp[0]+dp[5]);
+    ans = min(ans, dp[1]+dp[4]);
+    ans = min(ans, dp[2]+dp[3]);
+    ans = min(ans, dp[6]);
+    ans = min(ans, dp[3]+dp[4]);
+    ans = min(ans, dp[3]+dp[5]);
+    ans = min(ans, dp[4]+dp[5]);
+
+    if(ans > 3e5)
+        cout << -1;
+    else
+        cout << ans;
+
+    return 0;
 
 }
