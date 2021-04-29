@@ -5,6 +5,7 @@ int v, m;
 vector<int> color;
 vector<vector<int>> graph;
 int ans = INT_MAX;
+bool valid = false;
 
 vector<int> display;
 
@@ -13,23 +14,24 @@ void sol(int cur)
 {
     if(cur == v)
     {
-        for(int i = 0; i < m; i++)
+        for(int i = 0; i < v; i++)
         {
             ans = min(ans, color[i]);
         }
 
         if(ans != -1)
         {
+            valid = true;
             for(int i = 0; i < v; i++)
             {
                 display[i] = color[i];
             }        
             
         }
-        //if(ans != -1)
-          //  for(int i : color) cout << i << ' ';
+        if(ans != -1)
+            for(int i : color) cout << i << ' ';
 
-        //cout << endl;
+        cout << endl;
 
         return;
     }
@@ -87,7 +89,7 @@ int main()
     cout << endl;
     sol(0);
 
-    if(ans <= m && ans != -1)
+    if(valid)
         for(int i : display) cout << i << ' ';
     else
         cout << "impossible";
