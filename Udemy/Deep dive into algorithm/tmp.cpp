@@ -1,103 +1,139 @@
-// C++ program for Knight Tour problem
-#include <bits/stdc++.h>
+#include <iostream>
+
 using namespace std;
 
-#define N 8
+// N is the size of the 2D matrix N*N
+#define N 9
 
-int solveKTUtil(int x, int y, int movei, int sol[N][N],
-				int xMove[], int yMove[]);
-
-/* A utility function to check if i,j are
-valid indexes for N*N chessboard */
-int isSafe(int x, int y, int sol[N][N])
+/* A utility function to print grid */
+void print(int arr[N][N])
 {
-	return (x >= 0 && x < N && y >= 0 && y < N
-			&& sol[x][y] == -1);
-}
-
-/* A utility function to print
-solution matrix sol[N][N] */
-void printSolution(int sol[N][N])
-{
-	for (int x = 0; x < N; x++) {
-		for (int y = 0; y < N; y++)
-			cout << " " << setw(2) << sol[x][y] << " ";
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < N; j++)
+			cout << arr[i][j] << " ";
 		cout << endl;
 	}
 }
 
-/* This function solves the Knight Tour problem using
-Backtracking. This function mainly uses solveKTUtil()
-to solve the problem. It returns false if no complete
-tour is possible, otherwise return true and prints the
-tour.
-Please note that there may be more than one solutions,
-this function prints one of the feasible solutions. */
-int solveKT()
+// Checks whether it will be
+// legal to assign num to the
+// given row, col
+bool isSafe(int grid[N][N], int row,
+					int col, int num)
 {
-	int sol[N][N];
+	
+	// Check if we find the same num
+	// in the similar row , we
+	// return false
+	for (int x = 0; x <= 8; x++)
+		if (grid[row][x] == num)
+			return false;
 
-	/* Initialization of solution matrix */
-	for (int x = 0; x < N; x++)
-		for (int y = 0; y < N; y++)
-			sol[x][y] = -1;
+	// Check if we find the same num in
+	// the similar column , we
+	// return false
+	for (int x = 0; x <= 8; x++)
+		if (grid[x][col] == num)
+			return false;
 
-	/* xMove[] and yMove[] define next move of Knight.
-	xMove[] is for next value of x coordinate
-	yMove[] is for next value of y coordinate */
-	int xMove[8] = { 2, 1, -1, -2, -2, -1, 1, 2 };
-	int yMove[8] = { 1, 2, 2, 1, -1, -2, -2, -1 };
+	// Check if we find the same num in
+	// the particular 3*3 matrix,
+	// we return false
+	int startRow = row - row % 3,
+			startCol = col - col % 3;
 
-	// Since the Knight is initially at the first block
-	sol[0][0] = 0;
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+			if (grid[i + startRow][j +
+							startCol] == num)
+				return false;
 
-	/* Start from 0,0 and explore all tours using
-	solveKTUtil() */
-	if (solveKTUtil(0, 0, 1, sol, xMove, yMove) == 0) {
-		cout << "Solution does not exist";
-		return 0;
-	}
-	else
-		printSolution(sol);
-
-	return 1;
+	return true;
 }
 
-/* A recursive utility function to solve Knight Tour
-problem */
-int solveKTUtil(int x, int y, int movei, int sol[N][N],
-				int xMove[N], int yMove[N])
+/* Takes a partially filled-in grid and attempts
+to assign values to all unassigned locations in
+such a way to meet the requirements for
+Sudoku solution (non-duplication across rows,
+columns, and boxes) */
+bool solveSuduko(int grid[N][N], int row, int col)
 {
-	int k, next_x, next_y;
-	if (movei == N * N)
-		return 1;
+	// Check if we have reached the 8th
+	// row and 9th column (0
+	// indexed matrix) , we are
+	// returning true to avoid
+	// further backtracking
+	if (row == N - 1 && col == N)
+		return true;
 
-	/* Try all next moves from
-	the current coordinate x, y */
-	for (k = 0; k < 8; k++) {
-		next_x = x + xMove[k];
-		next_y = y + yMove[k];
-		if (isSafe(next_x, next_y, sol)) {
-			sol[next_x][next_y] = movei;
-			if (solveKTUtil(next_x, next_y, movei + 1, sol,
-							xMove, yMove)
-				== 1)
-				return 1;
-			else
-				
-			// backtracking
-				sol[next_x][next_y] = -1;
-		}
+	// Check if column value becomes 9 ,
+	// we move to next row and
+	// column start from 0
+	if (col == N) {
+		row++;
+		col = 0;
 	}
-	return 0;
+
+	// Check if the current position of
+	// the grid already contains
+	// value >0, we iterate for next column
+	if (grid[row][col] > 0)
+		return solveSuduko(grid, row, col + 1);
+
+	for (int num = 1; num <= N; num++)
+	{
+		
+		// Check if it is safe to place
+		// the num (1-9) in the
+		// given row ,col ->we
+		// move to next column
+		if (isSafe(grid, row, col, num))
+		{
+			
+		/* Assigning the num in
+			the current (row,col)
+			position of the grid
+			and assuming our assined
+			num in the position
+			is correct	 */
+			grid[row][col] = num;
+		
+			// Checking for next possibility with next
+			// column
+			if (solveSuduko(grid, row, col + 1))
+				return true;
+		}
+	
+		// Removing the assigned num ,
+		// since our assumption
+		// was wrong , and we go for
+		// next assumption with
+		// diff num value
+		grid[row][col] = 0;
+	}
+	return false;
 }
 
 // Driver Code
 int main()
 {
-	// Function Call
-	solveKT();
-	return 0;
-}
+	// 0 means unassigned cells
+	int grid[N][N] = { { 3, 0, 6, 5, 0, 8, 4, 0, 0 },
+					{ 5, 2, 0, 0, 0, 0, 0, 0, 0 },
+					{ 0, 8, 7, 0, 0, 0, 0, 3, 1 },
+					{ 0, 0, 3, 0, 1, 0, 0, 8, 0 },
+					{ 9, 0, 0, 8, 6, 3, 0, 0, 5 },
+					{ 0, 5, 0, 0, 9, 0, 6, 0, 0 },
+					{ 1, 3, 0, 0, 0, 0, 2, 5, 0 },
+					{ 0, 0, 0, 0, 0, 0, 0, 7, 4 },
+					{ 0, 0, 5, 2, 0, 6, 3, 0, 0 } };
 
-// This code is contributed by ShubhamCoder
+	if (solveSuduko(grid, 0, 0))
+		print(grid);
+	else
+		cout << "no solution exists " << endl;
+
+	return 0;
+	// This is code is contributed by Pradeep Mondal P
+}
