@@ -61,6 +61,57 @@ void sol(int cur)
 }
 
 
+vector<int> visit;
+bool bfs()
+{
+    visit.resize(m);
+    queue<int> q;
+    for(int& i : color)
+        i = 1;
+    for(int& i : visit)
+        i = -1;
+    
+    int cur = 0;
+
+    q.push(0);
+
+    int mx = 1;
+    while(q.size())
+    {
+        for(int i = 0; i < v; i++)
+        {
+            if(graph[q.front()][i] == 1)
+            {
+                if(i == q.front())
+                    continue;
+                else
+                {
+                    
+                    if(visit[i] == -1)
+                    {
+                        visit[i] = 1;
+                        q.push(i);
+                    }
+
+                    if(color[i] == color[q.front()])
+                    {
+                        color[i]++;      
+                        mx = max(mx, color[i]);
+                    }
+                }    
+            }
+        }
+        q.pop();
+    }
+
+
+    if(mx > m)  
+        return false;
+
+    return true;
+}
+
+
 int main()
 {
     ios_base::sync_with_stdio(false);
@@ -91,6 +142,14 @@ int main()
 
     if(valid)
         for(int i : display) cout << i << ' ';
+    else
+        cout << "impossible" << endl;
+
+    cout << endl;
+    if(bfs())
+    {
+        cout << "valid";
+    }
     else
         cout << "impossible";
 
