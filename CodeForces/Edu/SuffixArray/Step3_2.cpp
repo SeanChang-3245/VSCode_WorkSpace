@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// optimization of right half ec sorting
-// O(n logn)
+// substring searching using suffix array
 
-/*
+#define endl '\n'
+
 void count_sort(vector<int>& start, vector<int>& ec)
 {
     int len = start.size();
@@ -91,95 +91,11 @@ int main()
         ++k;
     }
 
-    for(int i = 0; i < len; i++)
-    {
-        cout << start[i] << ' ';
-    }
+    
+
+
+
     return 0;
 
 
-}
-*/
-
-void count_sort(vector<int> &suff, vector<int> &ec)
-{
-    int len = suff.size();
-
-    vector<int> tmp(len);
-    vector<int> cnt(len, 0);
-    for (int i : ec)
-        cnt[i]++;
-
-    vector<int> pos(len);
-    pos[0] = 0;
-
-    for (int i = 1; i < len; i++)
-        pos[i] = pos[i - 1] + cnt[i - 1];
-
-    for (int i : suff)
-    {
-        tmp[pos[ec[i]]++] = i;
-    }
-
-    suff = tmp;
-    return;
-}
-
-int main()
-{
-    string str;
-    cin >> str;
-    str += "$";
-    int len = str.size();
-    vector<int> suff(len);
-    vector<int> ec(len);
-
-    {
-        vector<pair<char, int>> tmp(len);
-
-        for (int i = 0; i < len; i++)
-            tmp[i] = {str[i], i};
-
-        sort(tmp.begin(), tmp.end());
-
-        for (int i = 0; i < len; i++)
-            suff[i] = tmp[i].second;
-
-        ec[0] = 0;
-        for (int i = 1; i < len; i++)
-        {
-            if (tmp[i].first == tmp[i - 1].first)
-                ec[suff[i]] = ec[suff[i - 1]];
-            else
-                ec[suff[i]] = ec[suff[i - 1]] + 1;
-        }
-    }
-
-    int k = 0;
-    while ((1 << k) < len)
-    {
-        for (int &i : suff)
-            i = (i - (1 << k) + len) % len;
-
-        count_sort(suff, ec);
-
-        vector<int> ec_new(len);
-        ec_new[0] = 0;
-
-        for (int i = 1; i < len; i++)
-        {
-            pair<int, int> cur = {ec[suff[i]], ec[(suff[i] + (1 << k)) % len]};
-            pair<int, int> prev = {ec[suff[i - 1]], ec[(suff[i - 1] + (1 << k)) % len]};
-
-            if(cur == prev)
-                ec_new[suff[i]] = ec_new[suff[i-1]];
-            else
-                ec_new[suff[i]] = ec_new[suff[i-1]] + 1;
-        }
-        ec = ec_new;
-        ++k;
-    }
-
-    for (int i : suff)
-        cout << i << ' ';
 }
