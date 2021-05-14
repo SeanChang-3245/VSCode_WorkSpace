@@ -4,54 +4,69 @@ using namespace std;
 #define endl '\n'
 #define ll long long
 
-double fr(int k)
+
+unsigned long long fr(int m)
 {
-    double ans = 1;
-    for(int i = 1; i <= k; i++)
-    {
+    long long ans = 1;
+    for(int i = 1; i <= m; i++)
         ans *= i;
-    }
     return ans;
 }
 
+
 int main()
 {
-    ios_base::sync_with_stdio(false);
+    ios::sync_with_stdio(false);
     cin.tie(0);
 
-    string str1, str2;
-    cin >> str1 >> str2;
-    int len = str1.size();
+    string str;
+    string tar;
+    cin >> str >> tar;
 
-    int p = 0, m = 0;
+    int pos = 0;
+    int tpos = 0;
     int q = 0;
-    for(int i = 0; i < len; i++)
-    {
-        if(str1[i] == '+')
-            ++p;
-        else if(str1[i] == '-')
-            ++m;
+    int m = str.size();
 
-        if(str2[i] == '+')
-            --p;
-        else if(str2[i] == '-')
-            --m;
+    for(int i = 0; i < m; i++)
+    {
+        if(tar[i] == '+')
+            ++tpos;
+        else if(tar[i] == '-')
+            --tpos;
         else
             ++q;
+
+        if(str[i] == '+')
+            ++pos;
+        else
+            --pos;
     }
 
-    double ans;
-    if(min(p, m) < 0)
-    {
+    double ans = 0;
+    if(abs(tpos - pos) > q || abs(tpos-pos)%2 != q%2)
         ans = 0;
-    }
     else
     {
-        ans = 1/(fr(q)/fr(p)/fr(m));
-    }
+        int plus, minus;
+        if(tpos >= pos)
+        {
+            plus = tpos - pos;
+            minus = (q - plus) / 2;
+            plus += minus;
+        }
+        else
+        {
+            minus = pos - tpos;
+            pos = (q - minus) /2;
+            minus += plus;
+        }
 
+        ans = fr(q) / fr(minus) / fr(plus) / pow(2, q);
+
+    }
+    
     cout << fixed << setprecision(12) << ans;
     return 0;
 
-    
 }
