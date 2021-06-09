@@ -58,7 +58,7 @@ int main()
         else
         {
             minus = pos - tpos;
-            pos = (q - minus) /2;
+            plus = (q - minus) /2;
             minus += plus;
         }
 
