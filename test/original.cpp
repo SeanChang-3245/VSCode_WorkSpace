@@ -1,4 +1,4 @@
-#include  <bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 int Partition(int* arr, int front, int end, int& tmp_switching, double& switching, int& tmp_comparisons, double& comparisons)
@@ -27,8 +27,8 @@ void QuickSort(int* arr, int front, int end, double& switching, int& tmp_switchi
 	if (front < end)
 	{
 		int pivot = Partition(arr, front, end, tmp_switching, switching, tmp_comparisons, comparisons);
-		QuickSort(arr, front, pivot - 1, switching, tmp_switching, comparisons, tmp_comparisons, worst_comparisons, worst_switching);             //±Æ§Çpivot¤§«eªº°}¦C
-		QuickSort(arr, pivot + 1, end, switching, tmp_switching, comparisons, tmp_comparisons, worst_comparisons, worst_switching);               //±Æ§Çpivot¤§«áªº°}¦C
+		QuickSort(arr, front, pivot - 1, switching, tmp_switching, comparisons, tmp_comparisons, worst_comparisons, worst_switching);             //æŽ’åºpivotä¹‹å‰çš„é™£åˆ—
+		QuickSort(arr, pivot + 1, end, switching, tmp_switching, comparisons, tmp_comparisons, worst_comparisons, worst_switching);               //æŽ’åºpivotä¹‹å¾Œçš„é™£åˆ—
 	}
 	if (tmp_comparisons > worst_comparisons)
 		worst_comparisons = tmp_comparisons;
@@ -49,15 +49,11 @@ void Shuffle(int* arr, size_t n)
 	}
 }
 
-
+int x = 10000;
+int arr[10000];
 
 int main()
 {
-    int x = 10000;
-    int arr[10000];
-
-
-
 	double start, end, total = 0;
 	start = clock();
 
@@ -69,19 +65,16 @@ int main()
 	{
 		tmp += i;
 	}
-	cout << "É@ §Ö³t±Æ§Çªk É@" << endl << endl;
-	cout << "²z½×³Ì¤j¥æ´«¦¸¼Æ¬°: " << tmp << " ¦¸" << endl;
-	cout << "²z½×³Ì¤j¤ñ¸û¦¸¼Æ¬°: " << x * (x - 1) / 2 << " ¦¸" << endl << endl;
-	cout << "®É¶¡½ÆÂø«×: O(n*log n)" << endl << endl;
+	cout << "ä¹‚ å¿«é€ŸæŽ’åºæ³• ä¹‚" << endl << endl;
+	cout << "ç†è«–æœ€å¤§äº¤æ›æ¬¡æ•¸ç‚º: " << tmp << " æ¬¡" << endl;
+	cout << "ç†è«–æœ€å¤§æ¯”è¼ƒæ¬¡æ•¸ç‚º: " << x * (x - 1) / 2 << " æ¬¡" << endl << endl;
+	cout << "æ™‚é–“è¤‡é›œåº¦: O(n*log n)" << endl << endl;
 
-        
+	for (int i = 0; i < x; i++)
+		arr[i] = i + 1;
 
 	for (int k = 0; k < times; k++)
 	{
-        
-        for (int i = 0; i < x; i++)
-                arr[i] = i + 1;
-
 		Shuffle(arr, x);
 
 		start = clock();
@@ -92,12 +85,12 @@ int main()
 		total += end - start;
 	}
 
-	cout << "¥­§¡¥æ´«¤F " << switching / times << " ¦¸" << endl;
-	cout << "¥­§¡¤ñ¸û¤F " << comparisons / times << " ¦¸" << endl << endl;
-	cout << "³Ì¦h¥æ´«¤F " << worst_switching << " ¦¸" << endl;
-	cout << "³Ì¦h¤ñ¸û¤F " << worst_comparisons << " ¦¸" << endl << endl;
+	cout << "å¹³å‡äº¤æ›äº† " << switching / times << " æ¬¡" << endl;
+	cout << "å¹³å‡æ¯”è¼ƒäº† " << comparisons / times << " æ¬¡" << endl << endl;
+	cout << "æœ€å¤šäº¤æ›äº† " << worst_switching << " æ¬¡" << endl;
+	cout << "æœ€å¤šæ¯”è¼ƒäº† " << worst_comparisons << " æ¬¡" << endl << endl;
 
-	cout << "±Æ§Ç°õ¦æ®É¶¡: " << total << " ²@¬í" << endl;
+	cout << "æŽ’åºåŸ·è¡Œæ™‚é–“: " << total << " æ¯«ç§’" << endl;
 
 	return 0;
 }
