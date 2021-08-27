@@ -14,7 +14,7 @@ private:
 public:
     ac(vector<string>& pat)
     {
-        tr.reserve(10000);
+        tr.reserve(10000);a
         endofword.reserve(10000);
         fail.reserve(10000);
         for(int i = 0; i < 10000; i++)
