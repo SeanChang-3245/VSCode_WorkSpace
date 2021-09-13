@@ -14,6 +14,7 @@ int main()
     cin >> len;
     cin >> a >> b;
 
+    swap(a, b);
 
     stack<int> stk;
     int swap = 0;
@@ -22,7 +23,7 @@ int main()
     {
         if(a[i] != b[i])
         {
-            if(stk.size() && i - stk.top() <= 2 && b[stk.top()] != b[i])
+            if(stk.size() && i - stk.top() < 2 && b[stk.top()] != b[i])
             {
                 swap += i - stk.top();
                 stk.pop();
@@ -33,5 +34,4 @@ int main()
     }
     cout << swap + stk.size();
     return 0;
-
 }
