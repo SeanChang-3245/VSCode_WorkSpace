@@ -1,7 +1,9 @@
 #include <iostream>
 #include <vector>
 #include <math.h>
+#include <bits/stdc++.h>
 
+#define MOD 998244353
 
 using namespace std;
 
@@ -9,12 +11,9 @@ using namespace std;
 
 int main()
 {
-    int m;
-    std::cin >> m;
-    vector<int> vec(m, 9);
-    for(int i= 0; i < m; i++)
-    {
-        std::cout << i+1 << ' ';
-    }
-    return 0;
+    string str = "12345";
+    reverse(str.begin() + 1, str.begin() + 4);
+    cout << str;
+
+    
 }
