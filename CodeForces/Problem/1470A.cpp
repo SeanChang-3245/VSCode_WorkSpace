@@ -38,9 +38,9 @@ int main()
 
         for(int i = 0; i < n; i++)
         {
-            if(g[cnt] >=  g[k[i]])
+            if(g[cnt] >=  g[k[i]-1])
             {
-                ans += g[k[i]];
+                ans += g[k[i]-1];
             }
             else
             {
