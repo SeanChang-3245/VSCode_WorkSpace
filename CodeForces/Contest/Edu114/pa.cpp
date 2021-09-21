@@ -6,6 +6,13 @@ using namespace std;
 
 int total = 0;
 
+ostream& operator<<(ostream& os, vector<int>& v)
+{
+    for(int i : v)
+        os << i << ' ';
+    return os;
+}
+
 void sol(int n, int l, int r, string str, int cnt)
 {
     if (total == n)
