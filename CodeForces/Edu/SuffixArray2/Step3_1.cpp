@@ -3,6 +3,49 @@ using namespace std;
 
 #define endl '\n'
 
+void rsort(vector<pair<pair<int, int>, int>>& v)
+{
+    int len = v.size();
+
+    vector<int> cnt(len, 0);
+    vector<int> pos(len);
+    for(int i = 0; i < len; i++)
+    {
+        cnt[v[i].first.second]++;
+    }
+
+    pos[0] = 0;
+    for(int i = 1; i < len; i++)
+    {
+        pos[i] = pos[i-1] + cnt[i-1];
+    }
+
+    vector<pair<pair<int, int>, int>> tmp(len);
+
+    for(int i = 0; i < len; i++)
+    {
+        tmp[pos[v[i].first.second]++] = v[i];
+    }
+
+    for(int& i : cnt)
+        i = 0;
+
+    for(auto i : tmp)
+        cnt[i.first.first]++;
+
+    pos[0] = 0;
+    for(int i = 1; i < len; i++)
+    {
+        pos[i] = pos[i-1] + cnt[i-1];
+    }
+
+    for(int i = 0; i < len; i++)
+    {
+        v[pos[tmp[i].first.first]++] = tmp[i];
+    }
+    return;
+}
+
 int main()
 {
 
@@ -55,7 +98,7 @@ int main()
             tmp[i] = {{ec[i], ec[(i+ (1 << k)) % len]}, i};
         }
 
-        sort(tmp.begin(), tmp.end());
+        rsort(tmp);
 
         for(int i = 0; i < len; i++)
         {
@@ -74,9 +117,17 @@ int main()
         k++;
     }
 
+    int t;
+    cin >> t;
 
-    for(int i : p)
-        cout << i << ' ';
-    return 0;
+    while(t--)
+    {
+        string tar;
+        cin >> tar;
+
+
+        
+    }
+
 
 }

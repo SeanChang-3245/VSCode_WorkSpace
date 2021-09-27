@@ -3,6 +3,12 @@ using namespace std;
 
 #define endl '\n'
 #define ll long long
+#define pb(a) push_back(a)
+
+bool cmp(pair<int, vector<int>>& l, pair<int, vector<int>>& r)
+{
+    return l.first < r.first;
+}
 
 int main()
 {
@@ -13,19 +19,35 @@ int main()
     cin >> t;
     while(t--)
     {
-        int atk;
-        cin >> atk;
+        int num;
+        cin >> num;
+        vector<pair<int, vector<int>>> cave(num);
 
-        int cave;
-        cin >> cave;
-
-        vector<vector<ll>> def(cave, vector<ll>(10e9+100));
-        for(int i = 0; i < cave; i++)
+        for(int i = 0; i < num; i++)
         {
-            ll tmp;
+            int tmp;
             cin >> tmp;
+
             for(int j = 0; j < tmp; j++)
-                cin >> def[i][j];
+            {
+                int k;
+                cin >> k;
+                cave[i].second.pb(k);
+                cave[i].first = max(cave[i].first, cave[i].second[j] - j);
+            }
         }
+
+        sort(cave.begin(), cave.end(), cmp);
+
+        int ans = cave[0].first + 1;
+        int sum = cave[0].second.size();
+
+        for(int i = 1; i < num; i++)
+        {
+            ans = max(ans, cave[i].first - sum + 1);
+            sum += cave[i].second.size();
+        }
+        cout << ans << endl;
     }
+    return 0; 
 }

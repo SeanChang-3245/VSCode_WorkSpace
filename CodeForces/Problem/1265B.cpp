@@ -1,21 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> un;
+#define endl '\n'
+#define ll long long
+#define mp(a, b) pair<int, int>(a, b)
 
-int find(int x)
+ostream& operator<<(ostream& os, vector<int>& v)
 {
-    while(un[x] >= 0)
-    {
-        x = un[x];
-    }
-    return x;
+    for(int i : v)
+        os << i << ' ';
+    return os;
 }
 
-void merge()
-{
-
-}
 
 int main()
 {
@@ -24,20 +20,38 @@ int main()
 
     int t;
     cin >> t;
-    while (t--)
+    
+    while(t--)
     {
-        int m;
-        cin >> m;
-        vector<int> v(m);
-        vector<int> mp(m);
-        un.resize(m);
-        for(int& i : un)
-            i = -1;
-
-        for (int i = 0; i < m; i++)
+        int len;
+        cin >> len;
+        vector<int> v(len), pos(len);
+        
+        for(int i = 0; i < len; i++)
         {
             cin >> v[i];
-            mp[v[i]-1] = i;
+            pos[v[i]-1] = i;
         }
+
+        //cout << "V_" << v << endl;
+        //cout << "POS_" << pos << endl;
+
+        int r, l;
+        l = r = pos[0];
+        cout << 1;
+        for(int i = 1; i < len; i++)
+        {
+            if(pos[i] < l)
+                l = pos[i];
+            else if(pos[i] > r)
+                r = pos[i];
+
+            if(r - l == i)
+                cout << 1;
+            else
+                cout << 0;
+        }
+        cout << endl;
     }
+    return 0;
 }

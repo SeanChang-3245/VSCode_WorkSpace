@@ -10,30 +10,30 @@ int main()
 
     int t;
     cin >> t;
-    while (t--)
+    while(t--)
     {
         int len;
-        string ori, ans, tmp;
-        int rev = 1;
+        string str;
+        string smallest;
+        int cnt = 1;
+        cin >> len >> str;
+        smallest = str;
 
-        cin >> len >> ori;
-        ans = tmp = ori;
-
-        for (int k = 2; k <= len; k++)
+        
+        for(int i = 1; i < len; i++)
         {
-            for (int i = 0; i + k - 1< len; i++)
+            rotate(str.begin(), str.begin() + 1, str.end());
+
+            if(str < smallest)
             {
-                reverse(tmp.begin() + i, tmp.begin() + i + k);
+                smallest = str;
+                cnt = i+1;
             }
-            if (tmp < ans)
-            {
-                rev = k;
-                ans = tmp;
-            }
-            tmp = ori;
         }
-        cout << ans << endl;
-        cout << rev << endl;
+
+        cout << smallest << endl << cnt << endl;
+
     }
+
     return 0;
 }
