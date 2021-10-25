@@ -17,8 +17,6 @@ int main()
     vector<int> p(len); //suffix array
     vector<int> ec(len);
 
-
-
     {
         vector<pair<char, int>> tmp(len);
         for(int i = 0; i < len; i++)

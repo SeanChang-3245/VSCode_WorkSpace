@@ -48,7 +48,6 @@ void rsort(vector<pair<pair<int, int>, int>>& v)
 
 int main()
 {
-
     ios_base::sync_with_stdio(false);
     cin.tie(0);
 
@@ -59,8 +58,6 @@ int main()
 
     vector<int> p(len); //suffix array
     vector<int> ec(len);
-
-
 
     {
         vector<pair<char, int>> tmp(len);
@@ -87,7 +84,6 @@ int main()
         }
     }
 
-
     int k = 0;
     while((1 << k) < len)
     {
@@ -106,7 +102,6 @@ int main()
         }
 
         ec[p[0]] = 0;
-
         for(int i = 1; i < len; i++)
         {
             if(tmp[i].first == tmp[i-1].first)
@@ -117,9 +112,7 @@ int main()
         k++;
     }
 
-
     for(int i : p)
         cout << i << ' ';
     return 0;
-
 }
