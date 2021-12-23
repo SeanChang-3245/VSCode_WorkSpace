@@ -9,8 +9,7 @@ int main()
     ios_base::sync_with_stdio(false);
     cin.tie(0);
 
-
-    //n個物品 背包大小為m
+    //n種物品 背包大小為m
     ll n, m;
     cin >> n >> m;
     vector<int> cnt(n), w(n), v(n);
