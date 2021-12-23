@@ -1,7 +1,9 @@
 #include <iostream>
 #include <stack>
+#include <bits/stdc++.h>
 
 #define endl '\n'
+#define ll long long
 
 using namespace std;
 
