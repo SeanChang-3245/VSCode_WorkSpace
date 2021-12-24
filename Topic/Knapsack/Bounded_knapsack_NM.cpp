@@ -18,9 +18,9 @@ int main()
     for (int i = 0; i < n; i++)
         cin >> w[i] >> v[i] >> c[i];
 
-    for (int i = 0; i < n + 1; i++)
+    for (int i = 1; i < n + 1; i++)
     {
-        for (int x = 0; x < c[i - 1]; x++)
+        for (int x = 0; x < w[i - 1]; x++)
         {
             deque<ll> mq;
 
