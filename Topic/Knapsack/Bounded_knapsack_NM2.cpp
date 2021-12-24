@@ -37,9 +37,9 @@ int main()
                 continue;
             }
 
-            for(int k = 0; k < min(j/w[i-1], cnt[i-1]); k++)
+            for(int k = 0; k <= cnt[i-1] && j-k*w[i-1] >= 0; k++)
             {
-                dp[i][j] = max(dp[i][j], dp[i-1][j - k*w[i-1]] + k * v[i-1]);
+                dp[i][j] = max(dp[i][j], dp[i-1][j - k*w[i-1]] + k*v[i-1]);
             }
         }
     }
