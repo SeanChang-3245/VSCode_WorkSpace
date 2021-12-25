@@ -25,9 +25,9 @@ ll sum(vector<vector<ll>>& BIT, int x, int y)
 
 void modify(vector<vector<ll>>& BIT, int x, int y, int val)
 {
-    for(int i = x; x < BIT.size(); i += lowbit(i))
+    for(int i = x; i < BIT.size(); i += lowbit(i))
     {
-        for(int j = y; y < BIT[i].size(); j += lowbit(j))
+        for(int j = y; j < BIT[i].size(); j += lowbit(j))
         {
             BIT[i][j] += val;
         }
