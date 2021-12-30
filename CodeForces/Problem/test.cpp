@@ -11,8 +11,23 @@ using namespace std;
 
 int main()
 {
-    string str = "12345";
-    reverse(str.begin() + 1, str.begin() + 4);
+
+    string str;
+    int num;
+    stringstream ss;
+
+    cin >> num;
+    (ss << num);
+    ss >> str;
+    cout << str << endl;
+
+    ss.clear();
+    ss.str("");
+
+    cin >> num;
+    ss << num;
+    str += ' ';
+    ss >> str;
     cout << str;
 
     
