@@ -6,44 +6,58 @@ using namespace std;
 
 ll a, b, m, k;
 vector<int> num;
-ll dp[12][12][2];  // [len][m cnt][f]
+ll dp[12][12][2]; // [len][m cnt][f]
 
-ll sol(int len, int cnt, int f)
+ll call(int len, int cnt, int f)
 {
-    if(cnt > k)
+    if (cnt > k)
         return 0;
 
-    if(dp[len][cnt][f] != -1)
-        return dp[len][cnt][f];   
-
-    if(len == num.size())
+    if (len == num.size())
     {
-        if(cnt == k)
+        if (cnt == k)
             return 1;
         return 0;
     }
 
+    if (dp[len][cnt][f] != -1)
+        return dp[len][cnt][f];
+
     ll ans = 0;
 
     int limit = 9;
-    if(f == true)
+    if (f == true)
         limit = num[len];
-    
-    for(int i = 0; i <= limit; i++)
+
+    for (int i = 0; i <= limit; i++)
     {
-        int ncnt = cnt, nf;
-        if(i == m)
+        int ncnt = cnt, nf = f;
+        if (i == m)
             ncnt++;
-        if(f == true && i < num[len])
+        if (nf == true && i < limit)
             nf = false;
-        ans += sol(len+1, ncnt, nf);
+        if(ncnt <= k) //剪枝
+            ans += call(len + 1, ncnt, nf);
     }
 
     return dp[len][cnt][f] = ans;
 }
 
+ll solve(int b)
+{
+    num.clear();
+    while (b > 0)
+    {
+        num.push_back(b % 10);
+        b /= 10;
+    }
 
+    reverse(num.begin(), num.end());
 
+    memset(dp, -1, sizeof(dp));
+    int ans = call(0, 0, 1);
+    return ans;
+}
 
 int main()
 {
@@ -53,29 +67,7 @@ int main()
     memset(dp, -1, sizeof(dp));
     cin >> a >> b >> m >> k;
 
-    int i = 0;
-    while(b > 0)
-    {
-        num[i] = b%10;
-        b /= 10;
-        i++;
-    }
-    reverse(num.begin(), num.end());
-    ll ansb = sol(0, 0, 1);
+    cout << solve(b) - solve(a - 1);
 
-    memset(dp, -1, sizeof(dp));
-    num.clear();
-    i = 0;
-    a--;
-    while(a > 0)
-    {
-        num[i] = a%10;
-        a /= 10;
-        i++;
-    }
-    reverse(num.begin(), num.end());
-    ll ansa = sol(0, 0, 1);
-
-    cout << ansb - ansa << endl;
     return 0;
 }
